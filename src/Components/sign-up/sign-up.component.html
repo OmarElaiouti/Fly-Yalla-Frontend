@@ -1,1 +1,42 @@
-<p>sign-up works!</p>
+  <form #signupform="ngForm">
+    <div class="form-group">
+      <label for="exampleInputEmail1">Email address</label>
+      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="usermail" [(ngModel)]="user.usermail" #usermail="ngModel"
+       required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+    </div>
+    @if(usermail.errors?.['required'] && usermail.dirty && usermail.touched){
+        <span>UserEmail is required</span>
+    }
+    @if(usermail.errors?.['pattern'] && usermail.dirty && usermail.touched){
+        <span>Please enter a valid email</span>
+    }
+    <div class="form-group">
+      <label for="exampleInputPassword1">Password</label>
+      <input type="password" class="form-control" id="exampleInputPassword1" name="password" [(ngModel)]="user.password" #password="ngModel"
+       required pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$">
+    </div>
+    @if(password.errors?.['required'] && password.dirty && password.touched){
+        <span>Password is required</span>
+    }
+    @if(password.errors?.['pattern'] && password.dirty && password.touched){
+        <span>
+            Password must meet the following criteria:
+        <ul>
+            <li>Contain at least 8 characters</li>
+            <li>Contain at least one uppercase or lowercase letter</li>
+            <li>Contain at least one digit</li>
+            <li>Contain at least one special character ($&#64;$!%*#?&)</li>
+        </ul>
+        </span>
+    }
+    <div class="form-group">
+        <label>Confirm Password</label>
+        <input type="password" class="form-control" name="confirmpassword" [(ngModel)]="user.confirmpassword" #confirmpassword="ngModel">
+      </div>
+    @if(confirmpassword.value != password.value && confirmpassword.dirty && confirmpassword.touched){
+        <span>Password is not matching</span>
+    }
+    <div>
+       <button type="submit" class="btn btn-primary" [disabled]="signupform.invalid">SignUp</button>
+    </div>   
+  </form>
