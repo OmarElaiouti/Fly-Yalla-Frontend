@@ -13,6 +13,7 @@ export class SignUpComponent {
  toggleselect:boolean = false;
  toggledocument:boolean = false;
  togglecountry:boolean = false;
+ togglecode:boolean = false;
   selectedDay: string = '';
   selectedMonth: string = '';
   selectedYear: string = '';
@@ -21,8 +22,11 @@ export class SignUpComponent {
   selectedexpireYear: string = '';
   isolderenough: boolean = true;
   notexpired: boolean = true;
+  countrycode: string = '';
+  mobilenum: string = '';
  user : IUser = {usermail: '' , password:'', confirmpassword:'' , title:'' , firstname:'' , lastname:'' , birthdate : new Date(`${this.selectedDay}/${this.selectedMonth}/${this.selectedYear}`),
-                  documenttype: '', documentnumber : '' , issuingcountry : '' ,documentexpirydate : new Date(`${this.selectedexpireDay}/${this.selectedexpireMonth}/${this.selectedexpireYear}`)}
+                  documenttype: '', documentnumber : '' , issuingcountry : '' ,documentexpirydate : new Date(`${this.selectedexpireDay}/${this.selectedexpireMonth}/${this.selectedexpireYear}`),
+                  phonenumber:`${this.countrycode}${this.mobilenum}`, contactemail:''}
  opened(){
   this.toggleselect =true;
  }
@@ -31,6 +35,9 @@ export class SignUpComponent {
  }
  opencountry(){
   this.togglecountry = true;
+ }
+ opencode(){
+  this.togglecode = true;
  }
  onSubmit(event : any , signupform:any){
   const currentDate = new Date();

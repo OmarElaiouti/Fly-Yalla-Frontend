@@ -11,5 +11,7 @@ export interface IUser {
     documenttype : string,
     documentnumber : string,
     issuingcountry? : string,
-    documentexpirydate?: Data
+    documentexpirydate?: Data,
+    phonenumber: string,
+    contactemail: string,
 }
