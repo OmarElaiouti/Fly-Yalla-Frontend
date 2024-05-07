@@ -1,25 +1,42 @@
   <form #signupform="ngForm" (ngSubmit)="onSubmit($event,signupform)">
-    <section>
-    <div class="form-group">
-      <label for="exampleInputEmail1">Email address</label>
-      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="usermail" [(ngModel)]="user.usermail" #usermail="ngModel"
+    <section class="mainwrapper">
+        <section class="container">
+            <h4 style="margin-top: 10px; margin-bottom: 15px;"><b>New Member Registration</b></h4>
+            <section><h3>Your login details</h3></section>
+    <section class="Yourlogindetails">
+    <div>
+      <label>Email address</label>
+      <input type="text" name="usermail" [(ngModel)]="user.usermail" #usermail="ngModel"
        required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+       @if(usermail.errors?.['required'] && usermail.dirty && usermail.touched){
+          <span>UserEmail is required</span>
+       }
+       @if(usermail.errors?.['required'] && signupform.submitted){
+          <span>UserEmail is required</span>
+       }
+       @if(usermail.errors?.['pattern'] && usermail.dirty && usermail.touched){
+          <span>Please enter a valid email</span>
+       }
     </div>
-    @if(usermail.errors?.['required'] && usermail.dirty && usermail.touched){
-        <span>UserEmail is required</span>
-    }
-    @if(usermail.errors?.['pattern'] && usermail.dirty && usermail.touched){
-        <span>Please enter a valid email</span>
-    }
-    <div class="form-group">
+    <div>
       <label for="exampleInputPassword1">Password</label>
-      <input type="password" class="form-control" id="exampleInputPassword1" name="password" [(ngModel)]="user.password" #password="ngModel"
-       required pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$">
-    </div>
-    @if(password.errors?.['required'] && password.dirty && password.touched){
+      <div class="input-group">
+      <input type="password" id="exampleInputPassword1" name="password" [(ngModel)]="user.password" #password="ngModel"
+       required pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$" (input)="toggleEyeIcon()">
+       @if(showEyeIcon && !showEyeIcon2){
+        <div class="input-groupaddon" (click)="togglePasswordVisibility($event,password)"><i id="toggler"class="far fa-eye"></i></div>
+       }
+       @if(showEyeIcon && showEyeIcon2){
+        <div class="input-groupaddon" (click)="togglePasswordVisibility2(password)"><i id="toggler" class="far fa-eye-slash"></i></div>
+       }
+      </div>
+       @if(password.errors?.['required'] && password.dirty && password.touched){
         <span>Password is required</span>
-    }
-    @if(password.errors?.['pattern'] && password.dirty && password.touched){
+        }
+       @if(password.errors?.['required'] && signupform.submitted){
+        <span>Password is required</span>
+       }
+       @if(password.errors?.['pattern'] && password.dirty && password.touched){
         <span>
             Password must meet the following criteria:
         <ul>
@@ -29,64 +46,90 @@
             <li>Contain at least one special character ($&#64;$!%*#?&)</li>
         </ul>
         </span>
-    }
-    <div class="form-group">
+        }
+    </div>
+    <div>
         <label>Confirm Password</label>
-        <input type="password" class="form-control" name="confirmpassword" [(ngModel)]="user.confirmpassword" #confirmpassword="ngModel">
+        <div class="input-group">
+        <input type="password" id="exampleInputPassword2" name="confirmpassword" [(ngModel)]="user.confirmpassword" #confirmpassword="ngModel" required (input)="toggleEyeConfirmIcon()">
+        @if(showEyeconfirmIcon && !showEyeconfirmIcon2){
+            <div class="input-groupaddon" (click)="togglePasswordConfirmVisibility(confirmpassword)"><i id="toggler"class="far fa-eye"></i></div>
+           }
+           @if(showEyeconfirmIcon && showEyeconfirmIcon2){
+            <div class="input-groupaddon" (click)="togglePasswordConfirmVisibility2(confirmpassword)"><i id="toggler" class="far fa-eye-slash"></i></div>
+           }
+          </div>
+        @if(confirmpassword.errors?.['required'] && confirmpassword.dirty && confirmpassword.touched){
+            <span>confirmpassword is required</span>
+        }
+        @if(confirmpassword.errors?.['required'] && signupform.submitted){
+            <span>confirmpassword is required</span>
+        }
+        @if(confirmpassword.value != password.value && confirmpassword.dirty && confirmpassword.touched){
+            <span>Password is not matching</span>
+        }
       </div>
-    @if(confirmpassword.value != password.value && confirmpassword.dirty && confirmpassword.touched){
-        <span>Password is not matching</span>
-    }
 </section>
-<section>
-    <div class="form-group">
+<section><h3>Passenger and Document details</h3></section>
+<section class="PassengerandDocumentdetails">
+    <div>
         <label>Title</label>
-        <select class="form-control" name="Title" id="title" [(ngModel)]="user.title" #title="ngModel" required (click)="opened()">
+        <select name="Title" id="title" [(ngModel)]="user.title" #title="ngModel" required (click)="opened()">
             <option value="Mr.">Mr.</option>
             <option value="Mrs.">Mrs.</option>
             <option value="Ms.">Ms.</option>
             <option value="Miss">Miss</option>
             <option value="Master">Master</option>
         </select>
-    </div>
-    @if(toggleselect && title.errors?.['required']){
+    <!-- @if(toggleselect && title.errors?.['required']){
+    <span>Tilte is required</span>
+    } -->
+    @if(title.errors?.['required'] && signupform.submitted){
         <span>Tilte is required</span>
     }
-    <div class="form-group">
+    </div>
+    <div>
         <label>First Name</label>
-        <input type="text" class="form-control" name="firstname" [(ngModel)]="user.firstname" #firstname="ngModel" required pattern="[a-zA-Z]+" maxlength="12" minlength="3">
+        <input type="text" name="firstname" [(ngModel)]="user.firstname" #firstname="ngModel" required pattern="[a-zA-Z]+" maxlength="12" minlength="3">
+        @if(firstname.errors?.['required'] && firstname.dirty && firstname.touched){
+            <span>FirstName is required</span>
+        }
+        @if(firstname.errors?.['required'] && signupform.submitted){
+            <span>FirstName is required</span>
+        }
+        @if(firstname.errors?.['minlength'] && firstname.dirty && firstname.touched){
+            <span>FirstName minimum length is 3 letters</span>
+        }
+        @if(firstname.errors?.['maxlength'] && firstname.dirty && firstname.touched){
+            <span>FirstName maximum length is 12 letters</span>
+        }
+        @if(firstname.errors?.['pattern'] && firstname.dirty && firstname.touched){
+            <span>FirstName must contain only alphabetic characters</span>
+        }
     </div>
-    @if(firstname.errors?.['required'] && firstname.dirty && firstname.touched){
-        <span>FirstName is required</span>
-    }
-    @if(firstname.errors?.['minlength'] && firstname.dirty && firstname.touched){
-        <span>FirstName minimum length is 3 letters</span>
-    }
-    @if(firstname.errors?.['maxlength'] && firstname.dirty && firstname.touched){
-        <span>FirstName maximum length is 12 letters</span>
-    }
-    @if(firstname.errors?.['pattern'] && firstname.dirty && firstname.touched){
-        <span>FirstName must contain only alphabetic characters</span>
-    }
-    <div class="form-group">
+    <div>
         <label>Last Name</label>
-        <input type="text" class="form-control" name="lastname" [(ngModel)]="user.lastname" #lastname="ngModel" required pattern="[a-zA-Z]+" maxlength="12" minlength="3">
+        <input type="text" name="lastname" [(ngModel)]="user.lastname" #lastname="ngModel" required pattern="[a-zA-Z]+" maxlength="12" minlength="3">
+        @if(lastname.errors?.['required'] && lastname.dirty && lastname.touched){
+            <span>LastName is required</span>
+        }
+        @if(lastname.errors?.['required'] && signupform.submitted){
+            <span>LastName is required</span>
+        }
+        @if(lastname.errors?.['minlength'] && lastname.dirty && lastname.touched){
+            <span>LastName minimum length is 3 letters</span>
+        }
+        @if(lastname.errors?.['maxlength'] && lastname.dirty && lastname.touched){
+            <span>LastName maximum length is 12 letters</span>
+        }
+        @if(lastname.errors?.['pattern'] && lastname.dirty && lastname.touched){
+            <span>lastName must contain only alphabetic characters</span>
+        }
     </div>
-    @if(lastname.errors?.['required'] && lastname.dirty && lastname.touched){
-        <span>LastName is required</span>
-    }
-    @if(lastname.errors?.['minlength'] && lastname.dirty && lastname.touched){
-        <span>LastName minimum length is 3 letters</span>
-    }
-    @if(lastname.errors?.['maxlength'] && lastname.dirty && lastname.touched){
-        <span>LastName maximum length is 12 letters</span>
-    }
-    @if(lastname.errors?.['pattern'] && lastname.dirty && lastname.touched){
-        <span>lastName must contain only alphabetic characters</span>
-    }
-    <div class="form-group">
+    <div>
         <label>Date of Birth</label>
-        <div>
+        <div class="Birthdate">
+            <div>
             <select name="day" [(ngModel)]="selectedDay" #day="ngModel" required>
                 <option value="" disabled selected>DD</option>
                 <option value="01">1</option>
@@ -121,9 +164,11 @@
                 <option value="30">30</option>
                 <option value="31">31</option>
            </select>
-           @if(day.errors?.['required'] && day.dirty && day.touched){
+           @if(day.errors?.['required'] && signupform.submitted){
             <span>Day of Birth is required</span>
            }
+        </div>
+        <div>
            <select name="month" [(ngModel)]="selectedMonth" #month="ngModel" required>
             <option value="" disabled selected>MONTH</option>
             <option value="01">January</option>
@@ -139,9 +184,11 @@
             <option value="11">November</option>
             <option value="12">December</option>
          </select>
-         @if(month.errors?.['required'] && month.dirty && month.touched){
+         @if(month.errors?.['required'] && signupform.submitted){
             <span>Month of Birth is required</span>
            }
+        </div>
+        <div>
          <select name="year" [(ngModel)]="selectedYear" #year="ngModel" required> 
             <option value="" disabled selected>YYYY</option>
             <option value="2024">2024</option>
@@ -230,38 +277,43 @@
             <option value="1941">1941</option>
             <option value="1940">1940</option>
         </select>
-        @if(year.errors?.['required'] && year.dirty && year.touched){
+        @if(year.errors?.['required'] && signupform.submitted){
             <span>Year of Birth is required</span>
            }
-        </div>
+    </div>
     </div>
     @if(!isolderenough && signupform.submitted){
         <span>Your Age must be at least 18</span>
     }
-    <div class="form-group">
+    </div>
+    <div [ngClass]="{ 'newlinediv': true, 'newlinediv2': user.documenttype === 'Passport' }">
+    <div>
         <label>Document Type</label>
-        <select class="form-control" name="documenttype" [(ngModel)]="user.documenttype" #documenttype="ngModel" required (click)="opendocument()">
+        <select name="documenttype" [(ngModel)]="user.documenttype" #documenttype="ngModel" required (click)="opendocument()">
             <option value="Passport">Passport</option>
             <option value="National ID">National ID</option>
         </select>
+        @if(documenttype.errors?.['required'] && signupform.submitted){
+            <span>DocumentType is required</span>
+        }
     </div>
-    @if(toggledocument && documenttype.errors?.['required']){
-        <span>DocumentType is required</span>
-    }
-    <div class="form-group">
+    <div>
         <label>Document Number</label>
-        <input type="text" class="form-control" name="documentnumber" [(ngModel)]="user.documentnumber" #documentnumber="ngModel" required pattern="[A-Z0-9]{8,14}">
+        <input type="text" name="documentnumber" [(ngModel)]="user.documentnumber" #documentnumber="ngModel" required pattern="[A-Z0-9]{8,14}">
+        @if(documentnumber.errors?.['required'] && documentnumber.dirty && documentnumber.touched){
+            <span>DocumentNumber is required</span>
+        }
+        @if(documentnumber.errors?.['required'] && signupform.submitted){
+            <span>DocumentNumber is required</span>
+        }
+        @if(documentnumber.errors?.['pattern'] && documentnumber.dirty && documentnumber.touched){
+            <span>Document Number must be 8-14 characters long and contain only uppercase letters and numbers</span>
+        }
     </div>
-    @if(documentnumber.errors?.['required'] && documentnumber.dirty && documentnumber.touched){
-        <span>DocumentNumber is required</span>
-    }
-    @if(documentnumber.errors?.['pattern'] && documentnumber.dirty && documentnumber.touched){
-        <span>Document Number must be 8-14 characters long and contain only uppercase letters and numbers</span>
-    }
     @if(user.documenttype == 'Passport'){
-        <div class="form-group">
+        <div>
             <label>Issuing country</label>
-            <select class="form-control" name="issuingcountry" [(ngModel)]="user.issuingcountry" #issuingcountry="ngModel" required (click)="opencountry()">
+            <select name="issuingcountry" [(ngModel)]="user.issuingcountry" #issuingcountry="ngModel" required (click)="opencountry()">
             <option value="" selected disabled>Select a country</option>
             <option value="Senegal">Senegal</option>
             <option value="Barbados">Barbados</option>
@@ -275,11 +327,11 @@
             <option value="Bhutan">Bhutan</option>
             <option value="Bolivia">Bolivia</option>
             </select>
+            @if(issuingcountry.invalid && signupform.submitted){
+                <span>Issuing Country is required</span>
+            }
         </div>
-        @if(togglecountry && issuingcountry.errors?.['required']){
-            <span>Issuing Country is required</span>
-        }
-        <div class="form-group">
+        <div>
             <label>Document Expiry Date</label>
             <div>
                 <select name="expireday" [(ngModel)]="selectedexpireDay" #expireday="ngModel" required>
@@ -319,6 +371,9 @@
                @if(expireday.errors?.['required'] && expireday.dirty && expireday.touched){
                 <span>Expire Day is required</span>
                }
+               @if(expireday.invalid && signupform.submitted){
+                <span>Expire Day is required</span>
+               }
                <select name="expiremonth" [(ngModel)]="selectedexpireMonth" #expiremonth="ngModel" required>
                 <option value="" disabled selected>MONTH</option>
                 <option value="01">January</option>
@@ -337,6 +392,9 @@
              @if(expiremonth.errors?.['required'] && expiremonth.dirty && expiremonth.touched){
                 <span>Expire Month is required</span>
                }
+             @if(expiremonth.invalid && signupform.submitted){
+                <span>Expire Month is required</span>
+             }
              <select name="expireyear" [(ngModel)]="selectedexpireYear" #expireyear="ngModel" required> 
                 <option value="" disabled selected>YYYY</option>
                 <option value="2024">2024</option>
@@ -350,18 +408,22 @@
             @if(expireyear.errors?.['required'] && expireyear.dirty && expireyear.touched){
                 <span>Expire Year is required</span>
                }
+            @if(expireyear.invalid && signupform.submitted){
+                <span>Expire Year is required</span>
+            }
             </div>
         </div>
         @if(!notexpired && signupform.submitted){
             <span>Your Passport is expired</span>
         }
     }
-
+</div>
 </section>
-<section>
-    <div class="form-group">
+<section><h3>Contact details</h3></section>
+<section class="Contactdetails">
+    <div>
         <label>CountryCode</label>
-        <select name="countryCode" class="form-control" [(ngModel)]="countrycode" #countrycode="ngModel" required (click)="opencode()">
+        <select name="countrycode" [(ngModel)]="countrycode" #countrycode="ngModel" required (click)="opencode()">
         <option value="" disabled selected>CounrtyCode</option>
         <option data-countryCode="DZ" value="213">Algeria (+213)</option>
 		<option data-countryCode="AD" value="376">Andorra (+376)</option>
@@ -438,33 +500,47 @@
         <option data-countryCode="SA" value="966">Saudi Arabia (+966)</option>
         </select>
     </div>
-    @if(togglecode && countrycode.errors?.['required']){
+    @if(countrycode.errors?.['required'] && signupform.submitted){
         <span>CountryCode is required</span>
     }
-    <div class="form-group">
+    <div>
         <label>Mobile</label>
-        <input type="text" class="form-control" name="mobile" [(ngModel)]="mobilenum" #mobile="ngModel" required pattern="^[0-9]{10,15}$">
+        <input type="text" name="mobile" [(ngModel)]="mobilenum" #mobile="ngModel" required pattern="^[0-9]{10,15}$">
+        @if(mobile.errors?.['required'] && mobile.dirty && mobile.touched){
+            <span>MobileNumber is required</span>
+        }
+        @if(mobile.errors?.['required'] && signupform.submitted){
+            <span>MobileNumber is required</span>
+        }
+        @if(mobile.errors?.['pattern'] && mobile.dirty && mobile.touched){
+            <span>Please enter a valid mobile number containing only numbers and having a length between 10 and 15 digits</span>
+        }
     </div>
-    @if(mobile.errors?.['required'] && mobile.dirty && mobile.touched){
-        <span>MobileNumber is required</span>
-    }
-    @if(mobile.errors?.['pattern'] && mobile.dirty && mobile.touched){
-        <span>Please enter a valid mobile number containing only numbers and having a length between 10 and 15 digits</span>
-    }
-    <div class="form-group">
+    <div>
         <label>Email</label>
-        <input type="email" name="email" class="form-control" [(ngModel)]="user.contactemail" #email="ngModel" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+        <input type="email" name="email" [(ngModel)]="user.contactemail" #email="ngModel" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+        @if(email.errors?.['required'] && email.dirty && email.touched){
+            <span>Email is required</span>
+        }
+        @if(email.errors?.['required'] && signupform.submitted){
+            <span>Email is required</span>
+        }
+        @if(email.errors?.['pattern'] && email.dirty && email.touched){
+            <span>Please enter a valid email</span>
+        }
     </div>
-    @if(email.errors?.['required'] && email.dirty && email.touched){
-        <span>Email is required</span>
-    }
-    @if(email.errors?.['pattern'] && email.dirty && email.touched){
-        <span>Please enter a valid email</span>
-    }
 </section>
 <section>
     <div>
-       <button type="submit" class="btn btn-primary" [disabled]="signupform.invalid">SignUp</button>
+        <re-captcha (resolved)="handleResolved()" siteKey="6LckMtMpAAAAAIXYYs5W8wkiXrab968to7WpUE9Y"></re-captcha>
     </div>
-</section>   
+</section>
+<section class="submitbuttonsec">
+    <div>
+       <button type="submit" class="submitbutton">SignUp</button>
+    </div>
+</section>
+</section>  
+</section> 
   </form>
+  

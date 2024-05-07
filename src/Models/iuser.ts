@@ -7,11 +7,11 @@ export interface IUser {
     title : string,
     firstname : string,
     lastname : string,
-    birthdate : Data,
+    birthdate : Date,
     documenttype : string,
     documentnumber : string,
     issuingcountry? : string,
-    documentexpirydate?: Data,
+    documentexpirydate?: Date,
     phonenumber: string,
     contactemail: string,
 }
