@@ -1,0 +1,186 @@
+.mainwrapper{
+    background-color: #f4f4f4;
+}
+.container{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+}
+h3{
+    font-size: 18px;
+    font-weight: 700;
+    color: #00bbb2;
+    margin-bottom: 10px;
+}
+label{
+    color: #000;
+    font-size: 16px;
+    text-transform: none;
+    margin-right: 15px;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+.Yourlogindetails{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 70px;
+    background-color: white;
+    padding: 30px;
+    border-radius: 20px;
+}
+.Yourlogindetails>div{
+    width: 33%;
+}
+.input-group{
+    position: relative;
+    display: flex;
+}
+.input-groupaddon{
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    cursor: pointer;
+    z-index: 9999;
+    transform: translateY(-50%);
+    font-size: 16px;
+}
+input{
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid black;
+    height: 35px;
+}
+select{
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid black;
+    height: 35px;
+}
+input:focus{
+    border: none;
+    border-bottom: 1px solid #00bbb2;
+    outline: none;
+}
+.PassengerandDocumentdetails{
+    width: 100%;
+    margin-bottom: 70px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background-color: white;
+    padding: 30px;
+    border-radius: 20px;
+}
+.PassengerandDocumentdetails>div{
+    width: 24%;
+    margin-bottom: 10px;
+}
+.newlinediv{
+    display: flex;
+    width: 50% !important;
+    gap: calc(8% / 3)
+}
+.newlinediv>div{
+    width: 48%;
+}
+.newlinediv2{
+    width:100% !important;
+    display: flex;
+    justify-content: space-between;
+    gap:unset;
+}
+.newlinediv2>div{
+    width: 24%;
+}
+.Birthdate{
+   display: flex;
+   justify-content: space-between;
+}
+.Birthdate>div{
+    width: 32%;
+}
+.Contactdetails{
+    width: 100%;
+    margin-bottom: 70px;
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    padding: 30px;
+    border-radius: 20px;
+}
+.Contactdetails div{
+    width: 33%;
+}
+.submitbuttonsec{
+    align-self: flex-end;
+    width: 120px;
+}
+.submitbutton{
+    background-color: #e0396d;
+    border: none;
+    color: white;
+    width: 100%;
+    height: 38px;
+    border-radius: 4px;
+    margin-bottom: 28px;
+}
+.submitbutton:hover {
+    cursor: pointer;
+}
+span{
+    color: red;
+    display: block;
+}
+@media screen and (max-width: 995px){
+    .container{
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+    }
+    .Yourlogindetails{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 70px;
+        background-color: white;
+        padding: 30px;
+        border-radius: 20px;
+    }
+    .Yourlogindetails div{
+        width: 100%;
+    }
+    .PassengerandDocumentdetails{
+        width: 100%;
+        margin-bottom: 70px;
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+        padding: 30px;
+        border-radius: 20px;
+    }
+    .PassengerandDocumentdetails>div{
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .newlinediv{
+        display: flex;
+        flex-direction: column;
+        width: 100% !important;
+    }
+    .newlinediv>div{
+        width: 100%;
+    }
+    .Contactdetails{
+        width: 100%;
+        margin-bottom: 70px;
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+        padding: 30px;
+        border-radius: 20px;
+    }
+    .Contactdetails div{
+        width: 100%;
+    }
+}
