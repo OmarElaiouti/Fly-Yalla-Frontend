@@ -333,6 +333,7 @@
         </div>
         <div>
             <label>Document Expiry Date</label>
+            <div class="Birthdate">
             <div>
                 <select name="expireday" [(ngModel)]="selectedexpireDay" #expireday="ngModel" required>
                     <option value="" disabled selected>DD</option>
@@ -374,6 +375,8 @@
                @if(expireday.invalid && signupform.submitted){
                 <span>Expire Day is required</span>
                }
+            </div>
+            <div>
                <select name="expiremonth" [(ngModel)]="selectedexpireMonth" #expiremonth="ngModel" required>
                 <option value="" disabled selected>MONTH</option>
                 <option value="01">January</option>
@@ -395,6 +398,8 @@
              @if(expiremonth.invalid && signupform.submitted){
                 <span>Expire Month is required</span>
              }
+            </div>
+            <div>
              <select name="expireyear" [(ngModel)]="selectedexpireYear" #expireyear="ngModel" required> 
                 <option value="" disabled selected>YYYY</option>
                 <option value="2024">2024</option>
@@ -411,11 +416,12 @@
             @if(expireyear.invalid && signupform.submitted){
                 <span>Expire Year is required</span>
             }
-            </div>
+        </div>
         </div>
         @if(!notexpired && signupform.submitted){
             <span>Your Passport is expired</span>
         }
+        </div>
     }
 </div>
 </section>

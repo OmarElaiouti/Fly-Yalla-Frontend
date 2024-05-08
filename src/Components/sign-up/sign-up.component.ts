@@ -89,10 +89,12 @@ togglePasswordConfirmVisibility2(confirmpassword:NgModel){
     signupform.control.markAllAsTouched();
   }
   else if((new Date().getFullYear() - parseInt(this.selectedYear)) < 18){
+    console.log(new Date().getFullYear() - parseInt(this.selectedYear));    
     this.isolderenough = false;
     event.stopPropagation();
   }
   else if(signupform.value.documenttype == 'Passport' && expireDate.toISOString() < currentDate.toISOString()){
+    this.isolderenough =true;
     this.notexpired =false;
     event.stopPropagation();
   }
